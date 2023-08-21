@@ -1,0 +1,20 @@
+<?php
+require_once("connect.php");
+if(isset($_REQUEST["submit"])){
+    $cata_id=$_REQUEST["catagory_id"];
+    $dish_name=$_REQUEST["dish_name"];
+    $dish_price=$_REQUEST["dish_price"];
+    $dish_type=$_REQUEST["dish_type"];
+    $dish_des=$_REQUEST["dish_des"];
+    $dish_image=$_FILES["img"]["name"];
+    $dish_image_tmp=$_FILES["img"]["tmp_name"];
+    $location="upload/";
+   $dish_image_name=rand(111111,9999999).'_'.$dish_image;
+     $sql="insert into dish (catagory_id,dish,dish_price,image,dish_detail,dish_type,status)values('$cata_id','$dish_name','$dish_price','$dish_image_name','$dish_des','$dish_type',1)";
+     $res=mysqli_query($con,$sql);
+     move_uploaded_file($dish_image_tmp,$location.$dish_image_name);
+     if($res){
+         header("location:add_dish.php?success");
+     }
+}
+?>
